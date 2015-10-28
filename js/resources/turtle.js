@@ -1,8 +1,8 @@
 import Backbone from 'backbone';
 
-let TurtleModel = Backbone.Model.extend({
+export default Backbone.Model.extend({
 
-  urlRoot: 'https://api.parse.com/1/classes/ninjas',
+  urlRoot: APP_URL,
 
   idAttribute: 'objectId' 
   // set to objectId otherwise
@@ -10,6 +10,3 @@ let TurtleModel = Backbone.Model.extend({
   // and that's not what it is in Parse
 
 });
-
-
-export default TurtleModel;
