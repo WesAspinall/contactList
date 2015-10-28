@@ -1,4 +1,5 @@
 import Backbone from 'backbone';
+import {APP_URL} from '../parse_data';
 
 export default Backbone.Model.extend({
 

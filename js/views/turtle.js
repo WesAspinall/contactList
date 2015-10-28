@@ -1,8 +1,7 @@
 export default function(){
-  return
-
+  return `
       <h1>${data.FirstName}</h1>
-      <li>${}</li>
-      <li>${}</li>
-      <li>${}</li>
+      <li>${data.Weapon}</li>
+      <li>${data.Location}</li>
+      <li>${data.Email}</li> `
 }

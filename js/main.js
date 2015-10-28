@@ -1,11 +1,14 @@
 import $ from 'jquery';
-import Router from './router';
+import _ from 'underscore';
+import moment from 'moment';
 import './ajaxSetup';
+import Backbone from 'backbone'
 
-var appElement = $('.app');
+import Router from './router';
 
-var router = new Router(appElement);
+let $app = $('.app');
+
+var router = new Router();
 router.start();
 
-
-console.log('Hello, World');
+ 

@@ -1,18 +1,22 @@
 function proccessData(data) {
   return data.map(function(item) {
     return `
-      <li class='turtles-list-item'data-turtles-id="${item.objectId}">${item.FirstName}</li>
-
-    `
+      <div class ="turtle">
+      <li class='turtles-list-item'data-turtles-id="${item.objectId}">
+      <span>${item.FirstName}</span>
+      </li>
+      </div>
+     `;
   }).join('');
+  
 }
 
-function turtlesTemplate(data) {
-  return `
-    <h2>
-    <ul>${proccessData(data)}</ul>
-    </h2>
+export default function(data) {
+    return
+    `<div class="ninja-list">
+      <h1>Ninja Turtles</h1>
+      <ul>${processData(data)}</ul>
+    </div>
   `;
-}
 
-export default turtlesTemplate
+}

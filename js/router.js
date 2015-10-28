@@ -2,35 +2,44 @@ import $ from 'jquery';
 import _ from 'underscore';
 import Backbone from 'backbone';
 
-import turtleCollection from './turtleCollection';
-import homeViewTemplate from './views/homeView';
+import {
+Turtles as TurtleCollection
+} from './resources';
 
-let Router = Backbone.Router.extend({
+import {
+  Turtles as TurtlesView, 
+  Turtle as TurtleView,
+  Spinner
+} from './views';
+
+export default Backbone.Router.extend({
 
     routes: {
-    ""      : "home",
+    ''      : "home",
     "turtles" : "showTurtles",
     "turtle/:id" : "showSpecificTurtle",
   },
 
 initialize(appElement) {
+
     this.$el = appElement;
+    this.collection = new TurtleCollection();
+},
 
-    this.collection = new turtleCollection();
-
-
-    this.$el.on('click', '.t-list-item', function(event) {
-      let $li = $(event.currentTarget);
-      var turtleId = $li.data('turtle-id');
-      router.navigate(`ninjas/${turtleId}`);
-      router.showSpecificTurtle(turtleId);
-    });
+showSpinner() {
+  this.$el.html(Spinner());
   },
 
+home(){
 
-  showTurtles() {
-    this.collection.fetch().then();
-  }
+  this.showSpinner();
+  return home;
 
+},
 
-})
+start() {
+    Backbone.history.start();
+    return this;
+  },
+
+});
