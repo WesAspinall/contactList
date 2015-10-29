@@ -6,6 +6,7 @@ import turtleCollection from './resources/turtleCollection';
 
 import homeView from './views/homeView';
 import tInfo from './views/turtleInfo';
+import showSpinner from './views/spinner';
 
 export default Backbone.Router.extend({
 
@@ -51,6 +52,9 @@ initialize(appElement) {
     });
   },
 
+  showSpinner() {
+    this.$el.html( showSpinner() );
+  },
 
 
 // createPerson(data){
@@ -66,14 +70,14 @@ start() {
     return this;
   },
 
-   showTurtle(id) {
-    let person = this.collection.get(id);
+   showSpecificTurtle(id) {
+    let turtle = this.collection.get(id);
 
     if (turtle) {
       // we found the person from the collection
       this.$el.html(
         tInfo(
-          person.templateData()
+          turtle.templateData()
         )
       );
     } else {

@@ -16,7 +16,7 @@ _jquery2['default'].ajaxSetup({
   }
 });
 
-},{"./parse_data":3,"jquery":11}],2:[function(require,module,exports){
+},{"./parse_data":3,"jquery":12}],2:[function(require,module,exports){
 'use strict';
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
@@ -52,7 +52,7 @@ new _router2['default']($app).start();
 
 console.log('main.js router works');
 
-},{"./ajaxSetup":1,"./router":6,"backbone":9,"jquery":11,"moment":12,"underscore":13}],3:[function(require,module,exports){
+},{"./ajaxSetup":1,"./router":6,"backbone":10,"jquery":12,"moment":13,"underscore":14}],3:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -98,7 +98,7 @@ exports['default'] = _backbone2['default'].Collection.extend({
 });
 module.exports = exports['default'];
 
-},{"../parse_data":3,"./turtleModel":5,"backbone":9}],5:[function(require,module,exports){
+},{"../parse_data":3,"./turtleModel":5,"backbone":10}],5:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -134,7 +134,7 @@ exports['default'] = _backbone2['default'].Model.extend({
 });
 module.exports = exports['default'];
 
-},{"../parse_data":3,"backbone":9,"blueimp-md5":10}],6:[function(require,module,exports){
+},{"../parse_data":3,"backbone":10,"blueimp-md5":11}],6:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -162,6 +162,10 @@ var _viewsHomeView2 = _interopRequireDefault(_viewsHomeView);
 var _viewsTurtleInfo = require('./views/turtleInfo');
 
 var _viewsTurtleInfo2 = _interopRequireDefault(_viewsTurtleInfo);
+
+var _viewsSpinner = require('./views/spinner');
+
+var _viewsSpinner2 = _interopRequireDefault(_viewsSpinner);
 
 exports['default'] = _backbone2['default'].Router.extend({
 
@@ -205,6 +209,10 @@ exports['default'] = _backbone2['default'].Router.extend({
     });
   },
 
+  showSpinner: function showSpinner() {
+    this.$el.html((0, _viewsSpinner2['default'])());
+  },
+
   // createPerson(data){
   //   this.showSpinner();
   //   let newPerson  = this.collection.add();
@@ -218,14 +226,14 @@ exports['default'] = _backbone2['default'].Router.extend({
     return this;
   },
 
-  showTurtle: function showTurtle(id) {
+  showSpecificTurtle: function showSpecificTurtle(id) {
     var _this3 = this;
 
-    var person = this.collection.get(id);
+    var turtle = this.collection.get(id);
 
     if (turtle) {
       // we found the person from the collection
-      this.$el.html((0, _viewsTurtleInfo2['default'])(person.templateData()));
+      this.$el.html((0, _viewsTurtleInfo2['default'])(turtle.templateData()));
     } else {
       this.showSpinner();
       turtle = this.collection.add({ objectId: id });
@@ -238,7 +246,7 @@ exports['default'] = _backbone2['default'].Router.extend({
 });
 module.exports = exports['default'];
 
-},{"./resources/turtleCollection":4,"./views/homeView":7,"./views/turtleInfo":8,"backbone":9,"jquery":11}],7:[function(require,module,exports){
+},{"./resources/turtleCollection":4,"./views/homeView":7,"./views/spinner":8,"./views/turtleInfo":9,"backbone":10,"jquery":12}],7:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -263,13 +271,26 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-exports["default"] = function (data) {
-  return "\n    <div class=\"turtle\">\n      <button class=\"back-button\" data-to=\"people\">\n        <i class=\"fa fa-arrow-left\"></i>\n      </button>\n      <div class=\"gravatar\">\n        <img src=\"" + data.Gravatar + "\">\n      </div>\n      <h1>" + data.FirstName + " " + data.Weapon + "</h1>\n      <p>" + data.Location + "</p>\n    </div>\n  ";
+exports["default"] = function () {
+  return "\n    <h1 class=\"spinner\">\n      <i class=\"fa fa-spinner fa-spin\"></i>\n    </h1>\n  ";
 };
 
 module.exports = exports["default"];
 
 },{}],9:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+exports["default"] = function (data) {
+  return "\n    <div class=\"turtle\">\n      <button class=\"back-button\" data-to=\"\">\n        <i class=\"fa fa-arrow-left\"></i>\n      </button>\n      <div class=\"gravatar\">\n        <img src=\"" + data.Gravatar + "\">\n      </div>\n      <h1>" + data.FirstName + " " + data.Weapon + "</h1>\n      <p>" + data.Location + "</p>\n    </div>\n  ";
+};
+
+module.exports = exports["default"];
+
+},{}],10:[function(require,module,exports){
 (function (global){
 //     Backbone.js 1.2.3
 
@@ -2168,7 +2189,7 @@ module.exports = exports["default"];
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 
-},{"jquery":11,"underscore":13}],10:[function(require,module,exports){
+},{"jquery":12,"underscore":14}],11:[function(require,module,exports){
 /*
  * JavaScript MD5 1.0.1
  * https://github.com/blueimp/JavaScript-MD5
@@ -2444,7 +2465,7 @@ module.exports = exports["default"];
     }
 }(this));
 
-},{}],11:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 /*!
  * jQuery JavaScript Library v2.1.4
  * http://jquery.com/
@@ -11656,7 +11677,7 @@ return jQuery;
 
 }));
 
-},{}],12:[function(require,module,exports){
+},{}],13:[function(require,module,exports){
 //! moment.js
 //! version : 2.10.6
 //! authors : Tim Wood, Iskren Chernev, Moment.js contributors
@@ -14852,7 +14873,7 @@ return jQuery;
     return _moment;
 
 }));
-},{}],13:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
 //     Underscore.js 1.8.3
 //     http://underscorejs.org
 //     (c) 2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
