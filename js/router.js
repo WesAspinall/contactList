@@ -5,7 +5,7 @@ import turtleCollection from './resources/turtleCollection';
 
 
 import homeView from './views/homeView';
-import turtleInfo from './views/turtleInfo';
+import tInfo from './views/turtleInfo';
 
 export default Backbone.Router.extend({
 
@@ -19,9 +19,19 @@ initialize(appElement) {
 
     this.$el = appElement;
     this.collection = new turtleCollection();
-},
 
+ this.$el.on('click', '.turtle-list-item', (event) => {
+      let $li = $(event.currentTarget);
+      let turtleId = $li.data('turtle-id');
+      this.navigate(`turtle/${turtleId}`, {trigger: true});
+    });
 
+    this.$el.on('click', '.back-button', (event) => {
+      let $button = $(event.currentTarget);
+      let route = $button.data('to');
+      this.navigate(route, {trigger: true});
+    });
+  },
 
  redirectToTurtles() {
     this.navigate('turtles', {
@@ -41,6 +51,8 @@ initialize(appElement) {
     });
   },
 
+
+
 // createPerson(data){
 //   this.showSpinner();
 //   let newPerson  = this.collection.add();
@@ -54,5 +66,31 @@ start() {
     return this;
   },
 
+   showTurtle(id) {
+    let person = this.collection.get(id);
+
+    if (turtle) {
+      // we found the person from the collection
+      this.$el.html(
+        tInfo(
+          person.templateData()
+        )
+      );
+    } else {
+      this.showSpinner();
+      turtle = this.collection.add({objectId: id});
+      turtle.fetch().then(() => {
+        this.$el.html(
+          tInfo(
+            turtle.templateData()
+          )
+        );
+      });
+    }
+  }
+
+
 });
+
+
 

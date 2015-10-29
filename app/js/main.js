@@ -172,9 +172,22 @@ exports['default'] = _backbone2['default'].Router.extend({
   },
 
   initialize: function initialize(appElement) {
+    var _this = this;
 
     this.$el = appElement;
     this.collection = new _resourcesTurtleCollection2['default']();
+
+    this.$el.on('click', '.turtle-list-item', function (event) {
+      var $li = (0, _jquery2['default'])(event.currentTarget);
+      var turtleId = $li.data('turtle-id');
+      _this.navigate('turtle/' + turtleId, { trigger: true });
+    });
+
+    this.$el.on('click', '.back-button', function (event) {
+      var $button = (0, _jquery2['default'])(event.currentTarget);
+      var route = $button.data('to');
+      _this.navigate(route, { trigger: true });
+    });
   },
 
   redirectToTurtles: function redirectToTurtles() {
@@ -185,10 +198,10 @@ exports['default'] = _backbone2['default'].Router.extend({
   },
 
   showTurtles: function showTurtles() {
-    var _this = this;
+    var _this2 = this;
 
     this.collection.fetch().then(function () {
-      _this.$el.html((0, _viewsHomeView2['default'])(_this.collection.toJSON()));
+      _this2.$el.html((0, _viewsHomeView2['default'])(_this2.collection.toJSON()));
     });
   },
 
@@ -203,6 +216,23 @@ exports['default'] = _backbone2['default'].Router.extend({
   start: function start() {
     _backbone2['default'].history.start();
     return this;
+  },
+
+  showTurtle: function showTurtle(id) {
+    var _this3 = this;
+
+    var person = this.collection.get(id);
+
+    if (turtle) {
+      // we found the person from the collection
+      this.$el.html((0, _viewsTurtleInfo2['default'])(person.templateData()));
+    } else {
+      this.showSpinner();
+      turtle = this.collection.add({ objectId: id });
+      turtle.fetch().then(function () {
+        _this3.$el.html((0, _viewsTurtleInfo2['default'])(turtle.templateData()));
+      });
+    }
   }
 
 });
