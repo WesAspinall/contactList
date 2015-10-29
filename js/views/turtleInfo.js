@@ -11,3 +11,4 @@ export default function(data) {
       <p>${data.Location}</p>
     </div>
   `;
+}

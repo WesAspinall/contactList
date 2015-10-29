@@ -1,5 +1,5 @@
 import Backbone from 'backbone';
-import turtleModel from './person';
+import turtleModel from './turtleModel';
 import {APP_URL} from '../parse_data';
 
 export default Backbone.Collection.extend({

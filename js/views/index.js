@@ -3,6 +3,6 @@ import tInfo from './turtleInfo';
 
 
 export {
-  Turtle,
-  Turtle
+  homeView,
+  tInfo
 };
