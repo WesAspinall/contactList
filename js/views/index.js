@@ -1,5 +1,5 @@
-import TurtleLi from './homeView';
-import Turtle from './turtleInfo';
+import homeView from './homeView';
+import tInfo from './turtleInfo';
 
 
 export {

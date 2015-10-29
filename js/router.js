@@ -2,7 +2,7 @@ import Backbone from 'backbone';
 import $ from 'jquery';
 
 import turtleCollection from './resources/turtleCollection';
-import turtleModel from './resources/turtleModel';
+
 
 import homeView from './views/homeView';
 import turtleInfo from './views/turtleInfo';
@@ -41,6 +41,13 @@ initialize(appElement) {
     });
   },
 
+// createPerson(data){
+//   this.showSpinner();
+//   let newPerson  = this.collection.add();
+//   newPerson.save().then(() => {
+//     this.showPeople();
+//   });
+// }
 
 start() {
     Backbone.history.start();
