@@ -1,11 +1,9 @@
 function proccessData(data) {
   return data.map(function(item) {
     return `
-      <div class ="turtle">
-      <li class='turtles-list-item'data-turtles-id="${item.objectId}">
+      <li class='turtle-list-item'data-turtle-id="${item.objectId}">
       <span>${item.FirstName}</span>
       </li>
-      </div>
      `;
   }).join('');
   
@@ -13,7 +11,7 @@ function proccessData(data) {
 
 export default function(data) {
     return
-    `<div class="ninja-list">
+    `<div class="turtle_list">
       <h1>Ninja Turtles</h1>
       <ul>${processData(data)}</ul>
     </div>

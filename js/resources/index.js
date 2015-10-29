@@ -1,10 +1,7 @@
-import Turtle from './turtle.js';
-import Turtles from './turtles.js';
-
+import Model from './turtleModel';
+import Collection from './turtleCollection';
 
 export {
-
-  Turtle,
-  Turtles
-  
+  Model,
+  Collection
 };

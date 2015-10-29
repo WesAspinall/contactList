@@ -7,16 +7,16 @@ var _jquery = require('jquery');
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
-var _parse_dataJs = require('./parse_data.js');
+var _parse_data = require('./parse_data');
 
 _jquery2['default'].ajaxSetup({
   headers: {
-    'X-Parse-Application-Id': _parse_dataJs.APP_ID,
-    'X-Parse-REST-API-Key': _parse_dataJs.APP_KEY
+    'X-Parse-Application-Id': _parse_data.APP_ID,
+    'X-Parse-REST-API-Key': _parse_data.API_KEY
   }
 });
 
-},{"./parse_data.js":3,"jquery":13}],2:[function(require,module,exports){
+},{"./parse_data":3,"jquery":10}],2:[function(require,module,exports){
 'use strict';
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
@@ -39,27 +39,31 @@ var _backbone = require('backbone');
 
 var _backbone2 = _interopRequireDefault(_backbone);
 
+// Plugs in the router
+
 var _router = require('./router');
 
 var _router2 = _interopRequireDefault(_router);
 
 var $app = (0, _jquery2['default'])('.app');
 
-var router = new _router2['default']();
-router.start();
+// This fires up the the router
+new _router2['default']($app).start();
 
-},{"./ajaxSetup":1,"./router":7,"backbone":12,"jquery":13,"moment":14,"underscore":15}],3:[function(require,module,exports){
+console.log('main.js router works');
+
+},{"./ajaxSetup":1,"./router":6,"backbone":9,"jquery":10,"moment":11,"underscore":12}],3:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
   value: true
 });
 var APP_ID = 'LzL1KGQ3efb9qVBFu6ihUDDCwlZC90VIZU0HTUPM';
-var APP_KEY = 'ZNrynchKrFONjovOLDJcJgEjrXaPC5X0UypEIzsX';
+var API_KEY = 'ZNrynchKrFONjovOLDJcJgEjrXaPC5X0UypEIzsX';
 var APP_URL = 'https://api.parse.com/1/classes/ninjas';
 
 exports.APP_ID = APP_ID;
-exports.APP_KEY = APP_KEY;
+exports.API_KEY = API_KEY;
 exports.APP_URL = APP_URL;
 
 },{}],4:[function(require,module,exports){
@@ -71,18 +75,30 @@ Object.defineProperty(exports, '__esModule', {
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-var _turtleJs = require('./turtle.js');
+var _backbone = require('backbone');
 
-var _turtleJs2 = _interopRequireDefault(_turtleJs);
+var _backbone2 = _interopRequireDefault(_backbone);
 
-var _turtlesJs = require('./turtles.js');
+var _turtleModelJs = require('./turtleModel.js');
 
-var _turtlesJs2 = _interopRequireDefault(_turtlesJs);
+var _turtleModelJs2 = _interopRequireDefault(_turtleModelJs);
 
-exports.Turtle = _turtleJs2['default'];
-exports.Turtles = _turtlesJs2['default'];
+var _parse_data = require('../parse_data');
 
-},{"./turtle.js":5,"./turtles.js":6}],5:[function(require,module,exports){
+exports['default'] = _backbone2['default'].Collection.extend({
+
+  url: _parse_data.APP_URL,
+
+  model: _turtleModelJs2['default'],
+
+  parse: function parse(data) {
+    return data.results;
+  }
+
+});
+module.exports = exports['default'];
+
+},{"../parse_data":3,"./turtleModel.js":5,"backbone":9}],5:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -109,7 +125,7 @@ exports['default'] = _backbone2['default'].Model.extend({
 });
 module.exports = exports['default'];
 
-},{"../parse_data":3,"backbone":12}],6:[function(require,module,exports){
+},{"../parse_data":3,"backbone":9}],6:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -121,55 +137,31 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'd
 var _backbone = require('backbone');
 
 var _backbone2 = _interopRequireDefault(_backbone);
-
-var _turtleJs = require('./turtle.js');
-
-var _turtleJs2 = _interopRequireDefault(_turtleJs);
-
-var _parse_data = require('../parse_data');
-
-exports['default'] = _backbone2['default'].Collection.extend({
-
-  url: _parse_data.APP_URL,
-
-  model: _turtleJs2['default'],
-
-  parse: function parse(data) {
-    return data.results;
-  }
-
-});
-module.exports = exports['default'];
-
-},{"../parse_data":3,"./turtle.js":5,"backbone":12}],7:[function(require,module,exports){
-'use strict';
-
-Object.defineProperty(exports, '__esModule', {
-  value: true
-});
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
 var _jquery = require('jquery');
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
-var _underscore = require('underscore');
+var _resourcesTurtleCollection = require('./resources/turtleCollection');
 
-var _underscore2 = _interopRequireDefault(_underscore);
+var _resourcesTurtleCollection2 = _interopRequireDefault(_resourcesTurtleCollection);
 
-var _backbone = require('backbone');
+var _resourcesTurtleModel = require('./resources/turtleModel');
 
-var _backbone2 = _interopRequireDefault(_backbone);
+var _resourcesTurtleModel2 = _interopRequireDefault(_resourcesTurtleModel);
 
-var _resources = require('./resources');
+var _viewsHomeView = require('./views/homeView');
 
-var _views = require('./views');
+var _viewsHomeView2 = _interopRequireDefault(_viewsHomeView);
+
+var _viewsTurtleInfo = require('./views/turtleInfo');
+
+var _viewsTurtleInfo2 = _interopRequireDefault(_viewsTurtleInfo);
 
 exports['default'] = _backbone2['default'].Router.extend({
 
   routes: {
-    '': "home",
+    '': "redirectToTurtles",
     "turtles": "showTurtles",
     "turtle/:id": "showSpecificTurtle"
   },
@@ -177,28 +169,23 @@ exports['default'] = _backbone2['default'].Router.extend({
   initialize: function initialize(appElement) {
 
     this.$el = appElement;
-    this.collection = new _resources.Turtles();
+    this.collection = new _resourcesTurtleCollection2['default']();
   },
 
-  showSpinner: function showSpinner() {
-    this.$el.html((0, _views.Spinner)());
+  redirectToTurtles: function redirectToTurtles() {
+    this.navigate('turtles', {
+      replace: true,
+      trigger: true
+    });
   },
 
-  home: (function (_home) {
-    function home() {
-      return _home.apply(this, arguments);
-    }
+  showTurtles: function showTurtles() {
+    var _this = this;
 
-    home.toString = function () {
-      return _home.toString();
-    };
-
-    return home;
-  })(function () {
-
-    this.showSpinner();
-    return home;
-  }),
+    this.collection.fetch().then(function () {
+      _this.$el.html((0, _viewsHomeView2['default'])(_this.collection.toJSON()));
+    });
+  },
 
   start: function start() {
     _backbone2['default'].history.start();
@@ -208,45 +195,26 @@ exports['default'] = _backbone2['default'].Router.extend({
 });
 module.exports = exports['default'];
 
-},{"./resources":4,"./views":8,"backbone":12,"jquery":13,"underscore":15}],8:[function(require,module,exports){
+},{"./resources/turtleCollection":4,"./resources/turtleModel":5,"./views/homeView":7,"./views/turtleInfo":8,"backbone":9,"jquery":10}],7:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
   value: true
 });
+function proccessData(data) {
+  return data.map(function (item) {
+    return '\n      <li class=\'turtle-list-item\'data-turtle-id="' + item.objectId + '">\n      <span>' + item.FirstName + '</span>\n      </li>\n     ';
+  }).join('');
+}
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-var _turtle = require('./turtle');
-
-var _turtle2 = _interopRequireDefault(_turtle);
-
-var _turtles = require('./turtles');
-
-var _turtles2 = _interopRequireDefault(_turtles);
-
-var _spinner = require('./spinner');
-
-var _spinner2 = _interopRequireDefault(_spinner);
-
-exports.Turtle = _turtle2['default'];
-exports.Turtles = _turtles2['default'];
-exports.Spinner = _spinner2['default'];
-
-},{"./spinner":9,"./turtle":10,"./turtles":11}],9:[function(require,module,exports){
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-exports["default"] = function () {
-  return "\n    <h1 class=\"spinner\">\n      <i class=\"fa fa-spinner fa-spin\"></i>\n    </h1>\n  ";
+exports['default'] = function (data) {
+  return;
+  '<div class="turtle_list">\n      <h1>Ninja Turtles</h1>\n      <ul>' + processData(data) + '</ul>\n    </div>\n  ';
 };
 
-module.exports = exports["default"];
+module.exports = exports['default'];
 
-},{}],10:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -259,26 +227,7 @@ exports["default"] = function () {
 
 module.exports = exports["default"];
 
-},{}],11:[function(require,module,exports){
-'use strict';
-
-Object.defineProperty(exports, '__esModule', {
-  value: true
-});
-function proccessData(data) {
-  return data.map(function (item) {
-    return '\n      <div class ="turtle">\n      <li class=\'turtles-list-item\'data-turtles-id="' + item.objectId + '">\n      <span>' + item.FirstName + '</span>\n      </li>\n      </div>\n     ';
-  }).join('');
-}
-
-exports['default'] = function (data) {
-  return;
-  '<div class="ninja-list">\n      <h1>Ninja Turtles</h1>\n      <ul>' + processData(data) + '</ul>\n    </div>\n  ';
-};
-
-module.exports = exports['default'];
-
-},{}],12:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 (function (global){
 //     Backbone.js 1.2.3
 
@@ -2177,7 +2126,7 @@ module.exports = exports['default'];
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 
-},{"jquery":13,"underscore":15}],13:[function(require,module,exports){
+},{"jquery":10,"underscore":12}],10:[function(require,module,exports){
 /*!
  * jQuery JavaScript Library v2.1.4
  * http://jquery.com/
@@ -11389,7 +11338,7 @@ return jQuery;
 
 }));
 
-},{}],14:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 //! moment.js
 //! version : 2.10.6
 //! authors : Tim Wood, Iskren Chernev, Moment.js contributors
@@ -14585,7 +14534,7 @@ return jQuery;
     return _moment;
 
 }));
-},{}],15:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 //     Underscore.js 1.8.3
 //     http://underscorejs.org
 //     (c) 2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors

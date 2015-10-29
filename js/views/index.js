@@ -1,10 +1,8 @@
-import Turtle from './turtle';
-import Turtles from './turtles';
-import Spinner from './spinner';
+import TurtleLi from './homeView';
+import Turtle from './turtleInfo';
 
 
 export {
   Turtle,
-  Turtles,
-  Spinner
+  Turtle
 };

@@ -1,21 +1,16 @@
-import $ from 'jquery';
-import _ from 'underscore';
 import Backbone from 'backbone';
+import $ from 'jquery';
 
-import {
-Turtles as TurtleCollection
-} from './resources';
+import turtleCollection from './resources/turtleCollection';
+import turtleModel from './resources/turtleModel';
 
-import {
-  Turtles as TurtlesView, 
-  Turtle as TurtleView,
-  Spinner
-} from './views';
+import homeView from './views/homeView';
+import turtleInfo from './views/turtleInfo';
 
 export default Backbone.Router.extend({
 
     routes: {
-    ''      : "home",
+    ''      : "redirectToTurtles",
     "turtles" : "showTurtles",
     "turtle/:id" : "showSpecificTurtle",
   },
@@ -23,19 +18,29 @@ export default Backbone.Router.extend({
 initialize(appElement) {
 
     this.$el = appElement;
-    this.collection = new TurtleCollection();
+    this.collection = new turtleCollection();
 },
 
-showSpinner() {
-  this.$el.html(Spinner());
+
+
+ redirectToTurtles() {
+    this.navigate('turtles', {
+      replace: true,
+      trigger: true
+    });
   },
 
-home(){
 
-  this.showSpinner();
-  return home;
+  showTurtles() {
+    this.collection.fetch().then(() => {
+      this.$el.html(
+        homeView(
+          this.collection.toJSON()
+        )
+      );
+    });
+  },
 
-},
 
 start() {
     Backbone.history.start();
@@ -43,3 +48,4 @@ start() {
   },
 
 });
+
