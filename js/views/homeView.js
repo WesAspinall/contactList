@@ -2,7 +2,8 @@ function processData(data) {
   return data.map(function(item){
     return `
       <li class="turtle-list-item" data-turtle-id="${item.objectId}">
-        <span>${item.FirstName}</span>
+        <img class="homePic" src ="${item.Picture}">
+        <div class="name">${item.FirstName}</div>
       </li>
     `;
   }).join('');

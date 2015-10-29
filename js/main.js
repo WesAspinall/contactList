@@ -12,7 +12,6 @@ let $app = $('.app');
 // This fires up the the router
 new Router($app).start();
 
-
 console.log('main.js router works');
 
  

@@ -4,11 +4,13 @@ export default function(data) {
       <button class="back-button" data-to="">
         <i class="fa fa-arrow-left"></i>
       </button>
-      <div class="gravatar">
-        <img src="${data.Gravatar}">
+      <div class="picture">
+        <img src="${data.Picture}">
       </div>
-      <h1>${data.FirstName} ${data.Weapon}</h1>
-      <p>${data.Location}</p>
+      <h1>${data.FirstName}</h1>
+      <p>Weapon: ${data.Weapon}
+      <p>Location: ${data.Location}</p>
+      <p>Email: ${data.Email}</p>
     </div>
   `;
 }

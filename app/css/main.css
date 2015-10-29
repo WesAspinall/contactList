@@ -2019,6 +2019,23 @@
   content: ""; }
 
 body {
-  background: #e2ebf3; }
+  background: #e2ebf3;
+  font-family: "Courier"; }
+
+.turtle-list {
+  display: inline-block; }
+  .turtle-list li {
+    list-style: none;
+    padding-bottom: 20px; }
+  .turtle-list li:hover {
+    color: white; }
+
+.turtle {
+  display: inline-block;
+  padding-left: 100px; }
+
+.homePic {
+  width: 150px;
+  height: 150px; }
 
 /*# sourceMappingURL=main.css.map */

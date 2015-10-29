@@ -3,4 +3,26 @@
 
 body {
   background: #e2ebf3;
+  font-family: 'Courier',;
+}
+
+.turtle-list{
+  display: inline-block;
+    li{
+      list-style: none;
+      padding-bottom: 20px;
+    }
+     li:hover{
+      color: white;
+     }
+}
+
+.turtle{
+  display: inline-block;
+  padding-left:100px;
+}
+
+.homePic{
+  width: 150px;
+  height: 150px;
 }
