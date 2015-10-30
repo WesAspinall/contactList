@@ -6,6 +6,10 @@ body {
   font-family: 'Courier',;
 }
 
+h1{
+ text-align: center;
+}
+
 .turtle-list{
   display: inline-block;
     li{
@@ -14,7 +18,7 @@ body {
       float: left;
     }
      li:hover{
-      color: white;
+      color: orange;
      }
 }
 
@@ -45,4 +49,9 @@ label {
     width: 90px;
     text-align: right;
    }
+}
+
+.name{
+  text-align: center;
+  border: 1px solid black;
 }

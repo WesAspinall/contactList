@@ -6,22 +6,26 @@ export default function(data) {
 
 <div class="addNewForm">
 
-<form method="post">
+<form>
     <div>
         <label for="name">Name:</label>
         <input type="text" id="FirstName" />
     </div>
     <div>
         <label for="weapon">Weapon:</label>
-        <input type="text" id="Weapon"
+        <input type="text" id="Weapon"/>
     </div>
     <div>
         <label for="mail">E-mail:</label>
         <input type="email" id="Email" />
     </div>
     <div>
+        <label for="picUrl">Picture URL:</label>
+        <input type="text" id="picUrl"/>
+    </div>
+    <div>
         <label for="location">Location:</label>
-        <input type="text" id="Location"
+        <input type="text" id="Location"/>
     </div>
     <br>
     <button class="submit">Submit New Ninja</button>

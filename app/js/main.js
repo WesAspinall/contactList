@@ -149,6 +149,10 @@ var _resourcesTurtleCollection = require('./resources/turtleCollection');
 
 var _resourcesTurtleCollection2 = _interopRequireDefault(_resourcesTurtleCollection);
 
+var _resourcesTurtleModel = require('./resources/turtleModel');
+
+var _resourcesTurtleModel2 = _interopRequireDefault(_resourcesTurtleModel);
+
 var _viewsAddNew = require('./views/addNew');
 
 var _viewsAddNew2 = _interopRequireDefault(_viewsAddNew);
@@ -193,11 +197,28 @@ exports['default'] = _backbone2['default'].Router.extend({
     });
 
     this.$el.on('click', '.submit', function (event) {
-      console.log('submit button test');
-      var $button = (0, _jquery2['default'])(event.currentTarget);
-      var route = $button.data('to');
-      _this.navigate(route, { trigger: true });
-    }), this.$el.on('click', '.back-button', function (event) {
+      console.log('submit btton');
+      var firstName = (0, _jquery2['default'])(_this.$el).find('#FirstName').val();
+      var weapon = (0, _jquery2['default'])(_this.$el).find('#Weapon').val();
+      var location = (0, _jquery2['default'])(_this.$el).find('#Location').val();
+      var picture = (0, _jquery2['default'])(_this.$el).find('#picUrl').val();
+      var email = (0, _jquery2['default'])(_this.$el).find('#Email').val();
+      var newNinja = new _resourcesTurtleModel2['default']({
+        FirstName: firstName,
+        Weapon: weapon,
+        Location: location,
+        Picture: picture,
+        Email: email
+      });
+
+      _this.collection.add(newNinja);
+      newNinja.save().then(function () {
+        alert('new ninja added');
+        _this.navigate('turtles', { trigger: true });
+      });
+    });
+
+    this.$el.on('click', '.back-button', function (event) {
       var $button = (0, _jquery2['default'])(event.currentTarget);
       var route = $button.data('to');
       _this.navigate(route, { trigger: true });
@@ -227,17 +248,19 @@ exports['default'] = _backbone2['default'].Router.extend({
     });
   },
 
+  submitNewNinja: function submitNewNinja() {
+    var _this4 = this;
+
+    this.showSpinner();
+    var newNinja = this.collection.add();
+    newNinja.save().then(function () {
+      _this4.addNewNinja();
+    });
+  },
+
   showSpinner: function showSpinner() {
     this.$el.html((0, _viewsSpinner2['default'])());
   },
-
-  // submitNewNinja() {
-  //   this.showSpinner();
-  //   let newNinja  = this.collection.add();
-  //   newNinja.save().then(() => {
-  //     this.addNewNinja();
-  //   })
-  // },
 
   start: function start() {
     _backbone2['default'].history.start();
@@ -245,7 +268,7 @@ exports['default'] = _backbone2['default'].Router.extend({
   },
 
   showSpecificTurtle: function showSpecificTurtle(id) {
-    var _this4 = this;
+    var _this5 = this;
 
     var turtle = this.collection.get(id);
 
@@ -256,7 +279,7 @@ exports['default'] = _backbone2['default'].Router.extend({
       this.showSpinner();
       turtle = this.collection.add({ objectId: id });
       turtle.fetch().then(function () {
-        _this4.$el.html((0, _viewsTurtleInfo2['default'])(turtle.templateData()));
+        _this5.$el.html((0, _viewsTurtleInfo2['default'])(turtle.templateData()));
       });
     }
   }
@@ -264,7 +287,7 @@ exports['default'] = _backbone2['default'].Router.extend({
 });
 module.exports = exports['default'];
 
-},{"./resources/turtleCollection":4,"./views/addNew":7,"./views/homeView":8,"./views/spinner":9,"./views/turtleInfo":10,"backbone":11,"jquery":12}],7:[function(require,module,exports){
+},{"./resources/turtleCollection":4,"./resources/turtleModel":5,"./views/addNew":7,"./views/homeView":8,"./views/spinner":9,"./views/turtleInfo":10,"backbone":11,"jquery":12}],7:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -272,7 +295,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 
 exports["default"] = function (data) {
-    return "\n      <button class=\"back-button\" data-to=\"\">\n        <i class=\"fa fa-arrow-left\"></i>\n      </button>\n\n<div class=\"addNewForm\">\n\n<form method=\"post\">\n    <div>\n        <label for=\"name\">Name:</label>\n        <input type=\"text\" id=\"FirstName\" />\n    </div>\n    <div>\n        <label for=\"weapon\">Weapon:</label>\n        <input type=\"text\" id=\"Weapon\"\n    </div>\n    <div>\n        <label for=\"mail\">E-mail:</label>\n        <input type=\"email\" id=\"Email\" />\n    </div>\n    <div>\n        <label for=\"location\">Location:</label>\n        <input type=\"text\" id=\"Location\"\n    </div>\n    <br>\n    <button class=\"submit\">Submit New Ninja</button>\n\n</form>\n</div>    \n  ";
+    return "\n      <button class=\"back-button\" data-to=\"\">\n        <i class=\"fa fa-arrow-left\"></i>\n      </button>\n\n<div class=\"addNewForm\">\n\n<form>\n    <div>\n        <label for=\"name\">Name:</label>\n        <input type=\"text\" id=\"FirstName\" />\n    </div>\n    <div>\n        <label for=\"weapon\">Weapon:</label>\n        <input type=\"text\" id=\"Weapon\"/>\n    </div>\n    <div>\n        <label for=\"mail\">E-mail:</label>\n        <input type=\"email\" id=\"Email\" />\n    </div>\n    <div>\n        <label for=\"picUrl\">Picture URL:</label>\n        <input type=\"text\" id=\"picUrl\"/>\n    </div>\n    <div>\n        <label for=\"location\">Location:</label>\n        <input type=\"text\" id=\"Location\"/>\n    </div>\n    <br>\n    <button class=\"submit\">Submit New Ninja</button>\n\n</form>\n</div>    \n  ";
 };
 
 module.exports = exports["default"];

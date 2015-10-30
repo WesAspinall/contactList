@@ -2,7 +2,7 @@ import Backbone from 'backbone';
 import $ from 'jquery';
 
 import turtleCollection from './resources/turtleCollection';
-
+import turtleModel from './resources/turtleModel';
 import addNewView from './views/addNew';
 import homeView from './views/homeView';
 import tInfo from './views/turtleInfo';
@@ -22,11 +22,11 @@ initialize(appElement) {
     this.$el = appElement;
     this.collection = new turtleCollection();
 
- this.$el.on('click', '.turtle-list-item', (event) => {
-      let $li = $(event.currentTarget);
-      let turtleId = $li.data('turtle-id');
-      this.navigate(`turtle/${turtleId}`, {trigger: true});
-    });
+this.$el.on('click', '.turtle-list-item', (event) => {
+    let $li = $(event.currentTarget);
+    let turtleId = $li.data('turtle-id');
+    this.navigate(`turtle/${turtleId}`, {trigger: true});
+  });
 
  this.$el.on('click', '.addNew', (event) => {
   let $button = $(event.currentTarget);
@@ -35,11 +35,27 @@ initialize(appElement) {
 });
 
   this.$el.on('click','.submit', (event) => {
-    console.log('submit button test');
-    let $button = $(event.currentTarget);
-    let route = $button.data('to');
-    this.navigate(route, {trigger: true});
-  }),
+   console.log('submit btton');
+   let firstName = $(this.$el).find('#FirstName').val();
+   let weapon = $(this.$el).find('#Weapon').val();
+   let location = $(this.$el).find('#Location').val();
+   let picture = $(this.$el).find('#picUrl').val();
+   let email = $(this.$el).find('#Email').val();
+   let newNinja = new turtleModel({
+    FirstName: firstName,
+    Weapon: weapon,
+    Location: location,
+    Picture: picture,
+    Email: email
+  });
+
+      this.collection.add(newNinja);
+      newNinja.save().then( () => {
+        alert('new ninja added');
+        this.navigate(`turtles`, {trigger: true});
+      });
+  
+  });
 
     this.$el.on('click', '.back-button', (event) => {
       let $button = $(event.currentTarget);
@@ -76,17 +92,18 @@ initialize(appElement) {
     });
   },
 
+submitNewNinja() {
+  this.showSpinner();
+  let newNinja  = this.collection.add();
+  newNinja.save().then(() => {
+    this.addNewNinja();
+  })
+},
+
   showSpinner() {
     this.$el.html( showSpinner() );
   },
 
-// submitNewNinja() {
-//   this.showSpinner();
-//   let newNinja  = this.collection.add();
-//   newNinja.save().then(() => {
-//     this.addNewNinja();
-//   })
-// },
 
 start() {
     Backbone.history.start();
