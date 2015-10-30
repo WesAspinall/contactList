@@ -153,6 +153,8 @@ var _viewsHomeView = require('./views/homeView');
 
 var _viewsHomeView2 = _interopRequireDefault(_viewsHomeView);
 
+var _viewsHomeView3 = _interopRequireDefault(_viewsHomeView);
+
 var _viewsTurtleInfo = require('./views/turtleInfo');
 
 var _viewsTurtleInfo2 = _interopRequireDefault(_viewsTurtleInfo);
@@ -166,7 +168,8 @@ exports['default'] = _backbone2['default'].Router.extend({
   routes: {
     '': "redirectToTurtles",
     "turtles": "showTurtles",
-    "turtle/:id": "showSpecificTurtle"
+    "turtle/:id": "showSpecificTurtle",
+    "addNew": "addNewNinja"
   },
 
   initialize: function initialize(appElement) {
@@ -199,7 +202,7 @@ exports['default'] = _backbone2['default'].Router.extend({
     var _this2 = this;
 
     this.collection.fetch().then(function () {
-      _this2.$el.html((0, _viewsHomeView2['default'])(_this2.collection.toJSON()));
+      _this2.$el.html((0, _viewsHomeView3['default'])(_this2.collection.toJSON()));
     });
   },
 
@@ -207,13 +210,15 @@ exports['default'] = _backbone2['default'].Router.extend({
     this.$el.html((0, _viewsSpinner2['default'])());
   },
 
-  // createPerson(data){
-  //   this.showSpinner();
-  //   let newPerson  = this.collection.add();
-  //   newPerson.save().then(() => {
-  //     this.showPeople();
-  //   });
-  // }
+  addNewNinja: function addNewNinja() {
+    var _this3 = this;
+
+    this.showSpinner();
+    var newNinja = this.collection.add();
+    newNinja.save().then(function () {
+      _this3.addNewNinja();
+    });
+  },
 
   start: function start() {
     _backbone2['default'].history.start();
@@ -221,7 +226,7 @@ exports['default'] = _backbone2['default'].Router.extend({
   },
 
   showSpecificTurtle: function showSpecificTurtle(id) {
-    var _this3 = this;
+    var _this4 = this;
 
     var turtle = this.collection.get(id);
 
@@ -232,7 +237,7 @@ exports['default'] = _backbone2['default'].Router.extend({
       this.showSpinner();
       turtle = this.collection.add({ objectId: id });
       turtle.fetch().then(function () {
-        _this3.$el.html((0, _viewsTurtleInfo2['default'])(turtle.templateData()));
+        _this4.$el.html((0, _viewsTurtleInfo2['default'])(turtle.templateData()));
       });
     }
   }
@@ -253,7 +258,7 @@ function processData(data) {
 }
 
 exports['default'] = function (data) {
-  return '\n    <div class="turtle-list">\n      <h1>Ninjas</h1>\n      <ul>' + processData(data) + '</ul>\n    </div>\n  ';
+  return '\n    <div class="turtle-list">\n      <h1>Ninjas</h1>\n      <div class="addNew">\n        <button id="addNew">Add New Ninja</button>\n      </div>\n      <ul>' + processData(data) + '</ul>\n    </div>\n  ';
 };
 
 module.exports = exports['default'];

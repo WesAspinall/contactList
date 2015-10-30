@@ -3,7 +3,7 @@ import $ from 'jquery';
 
 import turtleCollection from './resources/turtleCollection';
 
-
+import addNewView from './views/homeView';
 import homeView from './views/homeView';
 import tInfo from './views/turtleInfo';
 import showSpinner from './views/spinner';
@@ -11,9 +11,10 @@ import showSpinner from './views/spinner';
 export default Backbone.Router.extend({
 
     routes: {
-    ''      : "redirectToTurtles",
-    "turtles" : "showTurtles",
-    "turtle/:id" : "showSpecificTurtle",
+    ''             : "redirectToTurtles",
+    "turtles"      : "showTurtles",
+    "turtle/:id"   : "showSpecificTurtle",
+    "addNew"       : "addNewNinja"
   },
 
 initialize(appElement) {
@@ -57,13 +58,13 @@ initialize(appElement) {
   },
 
 
-// createPerson(data){
-//   this.showSpinner();
-//   let newPerson  = this.collection.add();
-//   newPerson.save().then(() => {
-//     this.showPeople();
-//   });
-// }
+addNewNinja() {
+  this.showSpinner();
+  let newNinja  = this.collection.add();
+  newNinja.save().then(() => {
+    this.addNewNinja();
+  })
+},
 
 start() {
     Backbone.history.start();
