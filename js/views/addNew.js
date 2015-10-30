@@ -1,14 +1,32 @@
-export default function(data){
-  return ` 
+export default function(data) {
+  return `
+      <button class="back-button" data-to="">
+        <i class="fa fa-arrow-left"></i>
+      </button>
 
-  <form action="">
-  <label for="GET-name">Name:</label>
-  <input id="GET-name" type="text" name="name">
-  <input type="submit" value="Save">
+<div class="addNewForm">
+
+<form method="post">
+    <div>
+        <label for="name">Name:</label>
+        <input type="text" id="FirstName" />
+    </div>
+    <div>
+        <label for="weapon">Weapon:</label>
+        <input type="text" id="Weapon"
+    </div>
+    <div>
+        <label for="mail">E-mail:</label>
+        <input type="email" id="Email" />
+    </div>
+    <div>
+        <label for="location">Location:</label>
+        <input type="text" id="Location"
+    </div>
+    <br>
+    <button class="submit">Submit New Ninja</button>
+
 </form>
-
-
-
-  `
-
+</div>    
+  `;
 }

@@ -27,3 +27,22 @@ body {
   width: 150px;
   height: 150px;
 }
+
+.addNewForm{
+  padding-left: 20px;
+  padding-top: 20px;
+
+  .submit{
+    border-radius: 10px;
+    margin-top: 10px;
+    margin-left: 100px;
+
+  }
+
+label {
+    /* To make sure that all labels have the same size and are properly aligned */
+    display: inline-block;
+    width: 90px;
+    text-align: right;
+   }
+}

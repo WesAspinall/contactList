@@ -3,7 +3,7 @@ import $ from 'jquery';
 
 import turtleCollection from './resources/turtleCollection';
 
-import addNewView from './views/homeView';
+import addNewView from './views/addNew';
 import homeView from './views/homeView';
 import tInfo from './views/turtleInfo';
 import showSpinner from './views/spinner';
@@ -27,6 +27,19 @@ initialize(appElement) {
       let turtleId = $li.data('turtle-id');
       this.navigate(`turtle/${turtleId}`, {trigger: true});
     });
+
+ this.$el.on('click', '.addNew', (event) => {
+  let $button = $(event.currentTarget);
+  let addNew = $button.data('addNew');
+  this.navigate(`addNew`, {trigger: true});
+});
+
+  this.$el.on('click','.submit', (event) => {
+    console.log('submit button test');
+    let $button = $(event.currentTarget);
+    let route = $button.data('to');
+    this.navigate(route, {trigger: true});
+  }),
 
     this.$el.on('click', '.back-button', (event) => {
       let $button = $(event.currentTarget);
@@ -53,18 +66,27 @@ initialize(appElement) {
     });
   },
 
+  addNewNinja() {
+    this.collection.fetch().then(() => {
+      this.$el.html(
+        addNewView(
+          this.collection.toJSON()
+        )
+      );
+    });
+  },
+
   showSpinner() {
     this.$el.html( showSpinner() );
   },
 
-
-addNewNinja() {
-  this.showSpinner();
-  let newNinja  = this.collection.add();
-  newNinja.save().then(() => {
-    this.addNewNinja();
-  })
-},
+// submitNewNinja() {
+//   this.showSpinner();
+//   let newNinja  = this.collection.add();
+//   newNinja.save().then(() => {
+//     this.addNewNinja();
+//   })
+// },
 
 start() {
     Backbone.history.start();

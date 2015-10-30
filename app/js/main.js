@@ -16,7 +16,7 @@ _jquery2['default'].ajaxSetup({
   }
 });
 
-},{"./parse_data":3,"jquery":11}],2:[function(require,module,exports){
+},{"./parse_data":3,"jquery":12}],2:[function(require,module,exports){
 'use strict';
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
@@ -52,7 +52,7 @@ new _router2['default']($app).start();
 
 console.log('main.js router works');
 
-},{"./ajaxSetup":1,"./router":6,"backbone":10,"jquery":11,"moment":12,"underscore":13}],3:[function(require,module,exports){
+},{"./ajaxSetup":1,"./router":6,"backbone":11,"jquery":12,"moment":13,"underscore":14}],3:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -98,7 +98,7 @@ exports['default'] = _backbone2['default'].Collection.extend({
 });
 module.exports = exports['default'];
 
-},{"../parse_data":3,"./turtleModel":5,"backbone":10}],5:[function(require,module,exports){
+},{"../parse_data":3,"./turtleModel":5,"backbone":11}],5:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -128,7 +128,7 @@ exports['default'] = _backbone2['default'].Model.extend({
 });
 module.exports = exports['default'];
 
-},{"../parse_data":3,"backbone":10}],6:[function(require,module,exports){
+},{"../parse_data":3,"backbone":11}],6:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -149,11 +149,13 @@ var _resourcesTurtleCollection = require('./resources/turtleCollection');
 
 var _resourcesTurtleCollection2 = _interopRequireDefault(_resourcesTurtleCollection);
 
+var _viewsAddNew = require('./views/addNew');
+
+var _viewsAddNew2 = _interopRequireDefault(_viewsAddNew);
+
 var _viewsHomeView = require('./views/homeView');
 
 var _viewsHomeView2 = _interopRequireDefault(_viewsHomeView);
-
-var _viewsHomeView3 = _interopRequireDefault(_viewsHomeView);
 
 var _viewsTurtleInfo = require('./views/turtleInfo');
 
@@ -184,7 +186,18 @@ exports['default'] = _backbone2['default'].Router.extend({
       _this.navigate('turtle/' + turtleId, { trigger: true });
     });
 
-    this.$el.on('click', '.back-button', function (event) {
+    this.$el.on('click', '.addNew', function (event) {
+      var $button = (0, _jquery2['default'])(event.currentTarget);
+      var addNew = $button.data('addNew');
+      _this.navigate('addNew', { trigger: true });
+    });
+
+    this.$el.on('click', '.submit', function (event) {
+      console.log('submit button test');
+      var $button = (0, _jquery2['default'])(event.currentTarget);
+      var route = $button.data('to');
+      _this.navigate(route, { trigger: true });
+    }), this.$el.on('click', '.back-button', function (event) {
       var $button = (0, _jquery2['default'])(event.currentTarget);
       var route = $button.data('to');
       _this.navigate(route, { trigger: true });
@@ -202,7 +215,15 @@ exports['default'] = _backbone2['default'].Router.extend({
     var _this2 = this;
 
     this.collection.fetch().then(function () {
-      _this2.$el.html((0, _viewsHomeView3['default'])(_this2.collection.toJSON()));
+      _this2.$el.html((0, _viewsHomeView2['default'])(_this2.collection.toJSON()));
+    });
+  },
+
+  addNewNinja: function addNewNinja() {
+    var _this3 = this;
+
+    this.collection.fetch().then(function () {
+      _this3.$el.html((0, _viewsAddNew2['default'])(_this3.collection.toJSON()));
     });
   },
 
@@ -210,15 +231,13 @@ exports['default'] = _backbone2['default'].Router.extend({
     this.$el.html((0, _viewsSpinner2['default'])());
   },
 
-  addNewNinja: function addNewNinja() {
-    var _this3 = this;
-
-    this.showSpinner();
-    var newNinja = this.collection.add();
-    newNinja.save().then(function () {
-      _this3.addNewNinja();
-    });
-  },
+  // submitNewNinja() {
+  //   this.showSpinner();
+  //   let newNinja  = this.collection.add();
+  //   newNinja.save().then(() => {
+  //     this.addNewNinja();
+  //   })
+  // },
 
   start: function start() {
     _backbone2['default'].history.start();
@@ -245,7 +264,20 @@ exports['default'] = _backbone2['default'].Router.extend({
 });
 module.exports = exports['default'];
 
-},{"./resources/turtleCollection":4,"./views/homeView":7,"./views/spinner":8,"./views/turtleInfo":9,"backbone":10,"jquery":11}],7:[function(require,module,exports){
+},{"./resources/turtleCollection":4,"./views/addNew":7,"./views/homeView":8,"./views/spinner":9,"./views/turtleInfo":10,"backbone":11,"jquery":12}],7:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+exports["default"] = function (data) {
+    return "\n      <button class=\"back-button\" data-to=\"\">\n        <i class=\"fa fa-arrow-left\"></i>\n      </button>\n\n<div class=\"addNewForm\">\n\n<form method=\"post\">\n    <div>\n        <label for=\"name\">Name:</label>\n        <input type=\"text\" id=\"FirstName\" />\n    </div>\n    <div>\n        <label for=\"weapon\">Weapon:</label>\n        <input type=\"text\" id=\"Weapon\"\n    </div>\n    <div>\n        <label for=\"mail\">E-mail:</label>\n        <input type=\"email\" id=\"Email\" />\n    </div>\n    <div>\n        <label for=\"location\">Location:</label>\n        <input type=\"text\" id=\"Location\"\n    </div>\n    <br>\n    <button class=\"submit\">Submit New Ninja</button>\n\n</form>\n</div>    \n  ";
+};
+
+module.exports = exports["default"];
+
+},{}],8:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -258,12 +290,12 @@ function processData(data) {
 }
 
 exports['default'] = function (data) {
-  return '\n    <div class="turtle-list">\n      <h1>Ninjas</h1>\n      <div class="addNew">\n        <button id="addNew">Add New Ninja</button>\n      </div>\n      <ul>' + processData(data) + '</ul>\n    </div>\n  ';
+  return '\n    <div class="turtle-list">\n      <h1>Ninjas</h1>\n      <div>\n        <button class="addNew">Add New Ninja</button>\n      </div>\n      <ul>' + processData(data) + '</ul>\n    </div>\n  ';
 };
 
 module.exports = exports['default'];
 
-},{}],8:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -276,7 +308,7 @@ exports["default"] = function () {
 
 module.exports = exports["default"];
 
-},{}],9:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -289,7 +321,7 @@ exports["default"] = function (data) {
 
 module.exports = exports["default"];
 
-},{}],10:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 (function (global){
 //     Backbone.js 1.2.3
 
@@ -2188,7 +2220,7 @@ module.exports = exports["default"];
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 
-},{"jquery":11,"underscore":13}],11:[function(require,module,exports){
+},{"jquery":12,"underscore":14}],12:[function(require,module,exports){
 /*!
  * jQuery JavaScript Library v2.1.4
  * http://jquery.com/
@@ -11400,7 +11432,7 @@ return jQuery;
 
 }));
 
-},{}],12:[function(require,module,exports){
+},{}],13:[function(require,module,exports){
 //! moment.js
 //! version : 2.10.6
 //! authors : Tim Wood, Iskren Chernev, Moment.js contributors
@@ -14596,7 +14628,7 @@ return jQuery;
     return _moment;
 
 }));
-},{}],13:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
 //     Underscore.js 1.8.3
 //     http://underscorejs.org
 //     (c) 2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors

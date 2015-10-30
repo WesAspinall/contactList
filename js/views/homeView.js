@@ -13,8 +13,8 @@ export default function(data) {
   return `
     <div class="turtle-list">
       <h1>Ninjas</h1>
-      <div class="addNew">
-        <button id="addNew">Add New Ninja</button>
+      <div>
+        <button class="addNew">Add New Ninja</button>
       </div>
       <ul>${processData(data)}</ul>
     </div>
