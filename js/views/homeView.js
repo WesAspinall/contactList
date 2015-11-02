@@ -8,7 +8,7 @@ export default React.createClass({
  processPhotos(data) {
     return (
       <div className="photoContainer" key={data.objectId}>
-        <img className="photo" src={data.Img}/>
+        <img className="homePic" src={data.Img}/>
       </div>
     );
   },

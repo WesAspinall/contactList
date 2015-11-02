@@ -228,7 +228,7 @@ exports['default'] = _react2['default'].createClass({
     return _react2['default'].createElement(
       'div',
       { className: 'photoContainer', key: data.objectId },
-      _react2['default'].createElement('img', { className: 'photo', src: data.Img })
+      _react2['default'].createElement('img', { className: 'homePic', src: data.Img })
     );
   },
 
