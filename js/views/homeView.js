@@ -1,11 +1,26 @@
-import import React from 'react';
+import Backbone from 'backbone';
+import React from 'react';
+import ReactDom from 'react-dom';
+
+
 export default React.createClass({
 
-  
-  render() {
-    
-    <div className='homeView'>
+ processPhotos(data) {
+    return (
+      <div className="photoContainer" key={data.objectId}>
+        <img className="photo" src={data.Img}/>
+      </div>
+    );
+  },
 
-    </div>
+  render() { 
+    return (
+     <div className="homeContainer"> 
+       <div className="homePhotos">
+        {this.props.photos.map(this.processPhotos)}
+       </div>
+     </div> 
+    )  
   }
-}); 
+
+});

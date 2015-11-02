@@ -1,17 +1,11 @@
-import $ from 'jquery';
-import _ from 'underscore';
-import moment from 'moment';
-import './ajaxSetup';
-import Backbone from 'backbone';
+import React from 'react';
+import ReactDom from 'react-dom';
 
-// Plugs in the router 
+import './ajaxSetup';
+
+
 import Router from './router';
 
-let $app = $('.app');
+let appElement = document.querySelector('.app');
 
-// This fires up the the router
-new Router($app).start();
-
-console.log('main.js router works');
-
- 
+new Router(appElement).start();
