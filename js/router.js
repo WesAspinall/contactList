@@ -11,8 +11,8 @@ import showSpinner from './views/spinner';
 export default Backbone.Router.extend({
 
     routes: {
-    ''             : "redirectToTurtles",
-    "turtles"      : "showTurtles",
+    ''             : "redirectToHome",
+    "Home"         : "showPhotos",
     "turtle/:id"   : "showSpecificTurtle",
     "addNew"       : "addNewNinja"
   },
@@ -65,14 +65,14 @@ this.$el.on('click', '.turtle-list-item', (event) => {
   },
 
  redirectToTurtles() {
-    this.navigate('turtles', {
+    this.navigate('Home', {
       replace: true,
       trigger: true
     });
   },
 
 
-  showTurtles() {
+  showPhotos() {
     this.collection.fetch().then(() => {
       this.$el.html(
         homeView(

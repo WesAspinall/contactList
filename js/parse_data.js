@@ -1,6 +1,6 @@
-const APP_ID = 'LzL1KGQ3efb9qVBFu6ihUDDCwlZC90VIZU0HTUPM';
-const API_KEY = 'ZNrynchKrFONjovOLDJcJgEjrXaPC5X0UypEIzsX';
-const APP_URL = 'https://api.parse.com/1/classes/ninjas';
+const APP_ID = 'R5am1ZD46HujS0DLDYruGSPLvHtvoRs3eR0X701B';
+const API_KEY = 'dhjVfFIeOu0U8trp6eKnQJYYWlIJOI3OsUrUFC6e';
+const APP_URL = 'https://api.parse.com/1/classes/photos';
 
 export {
   APP_ID,

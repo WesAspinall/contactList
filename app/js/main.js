@@ -58,9 +58,9 @@ console.log('main.js router works');
 Object.defineProperty(exports, '__esModule', {
   value: true
 });
-var APP_ID = 'LzL1KGQ3efb9qVBFu6ihUDDCwlZC90VIZU0HTUPM';
-var API_KEY = 'ZNrynchKrFONjovOLDJcJgEjrXaPC5X0UypEIzsX';
-var APP_URL = 'https://api.parse.com/1/classes/ninjas';
+var APP_ID = 'R5am1ZD46HujS0DLDYruGSPLvHtvoRs3eR0X701B';
+var API_KEY = 'dhjVfFIeOu0U8trp6eKnQJYYWlIJOI3OsUrUFC6e';
+var APP_URL = 'https://api.parse.com/1/classes/photos';
 
 exports.APP_ID = APP_ID;
 exports.API_KEY = API_KEY;
@@ -308,7 +308,7 @@ Object.defineProperty(exports, '__esModule', {
 });
 function processData(data) {
   return data.map(function (item) {
-    return '\n      <li class="turtle-list-item" data-turtle-id="' + item.objectId + '">\n        <img class="homePic" src ="' + item.Picture + '">\n        <div class="name">' + item.FirstName + '</div>\n      </li>\n    ';
+    return '\n      <li class="turtle-list-item" data-turtle-id="' + item.objectId + '">\n        <img class="homePic" src ="' + item.Img + '">\n        <div class="name">' + item.FirstName + '</div>\n      </li>\n    ';
   }).join('');
 }
 
